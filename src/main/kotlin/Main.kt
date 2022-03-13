@@ -24,9 +24,6 @@ import java.io.File
 @Preview
 fun App() {
 
-    val service = PostService.create()
-
-    var text by remember { mutableStateOf("Hello, World!") }
     val quizFile = File("/home/john/dvpt/demo/quiz.png")
     val inputStream = quizFile.inputStream()
     val byteArray = inputStream.readBytes()
@@ -34,40 +31,7 @@ fun App() {
     val quizCreator = remember{QuizCreator()}
     val image = quizCreator.sendOCRAPIrequest(byteArray)
     MaterialTheme {
-
-//        var posts by remember { mutableStateOf(emptyList<PostResponse>()) }
-//        var list = mutableListOf<PostRequest>()
-//        val pr = PostRequest(byteArray)
-//
-//        val postsState = produceState<List<PostResponse>>(
-//            initialValue = emptyList(),
-//            producer = {
-//                value = listOf(service.createPost(pr) ?: PostResponse("value"))
-//            }
-//        )
-//
-//        if (postsState.value.isNotEmpty()){
-//            val response1 = postsState.value[0]
-//            val decoded = response1.img_str.decodeBase64Bytes()
-//            val im = org.jetbrains.skia.Image.makeFromEncoded(decoded)
-//
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxHeight(0.95F)
-//                    .fillMaxWidth(),
-//                horizontalAlignment = Alignment.CenterHorizontally
-//            ) {
-//                Image(
-//                    painter = BitmapPainter(image = im.toComposeImageBitmap()),
-//                    contentDescription = null
-//                )
-//            }
-//        }
-
-
         ImageDisplay(image)
-
-
     }
 }
 

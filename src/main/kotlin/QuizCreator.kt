@@ -9,31 +9,15 @@ class QuizCreator {
 
     private val service = PostService.create()
 
-    @OptIn(InternalAPI::class)
 
-    @Composable
+    @OptIn(InternalAPI::class)
     fun sendOCRAPIrequest(byteArray: ByteArray): ImageBitmap {
 
         val pr = PostRequest(byteArray)
 
 
-
-            val postsState = runBlocking {
-                produceState<List<PostResponse>>(
-                initialValue = emptyList(),
-                producer = {
-//                value = listOf(service.createPost(pr) ?: PostResponse("value"))
-//                    value = runBlocking {service.getPosts() }
-                    value = listOf(service.createPost(pr) ?: PostResponse("value"))
-
-
-        }
-                )
-
-            }
-
-        val response1 = postsState.value[0]
-        val decoded = response1.img_str.decodeBase64Bytes()
+        val response = runBlocking { service.createPost(pr)}
+        val decoded = response?.img_str?.decodeBase64Bytes()
         val im = org.jetbrains.skia.Image.makeFromEncoded(decoded)
 
         return im.toComposeImageBitmap()
